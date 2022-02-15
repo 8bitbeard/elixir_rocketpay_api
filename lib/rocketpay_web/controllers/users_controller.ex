@@ -1,5 +1,6 @@
 defmodule RocketpayWeb.UsersController do
   use RocketpayWeb, :controller
+  use RocketpayWeb.Swagger.User
 
   alias Rocketpay.User
 

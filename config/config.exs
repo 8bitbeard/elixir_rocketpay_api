@@ -25,6 +25,17 @@ config :rocketpay, :basic_auth,
   username: "banana",
   password: "nanica123"
 
+config :rocketpay, :phoenix_swagger,
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      router: RocketpayWeb.Router,     # phoenix routes will be converted to swagger paths
+      endpoint: RocketpayWeb.Endpoint  # (optional) endpoint config used to set host, port and https schemes.
+    ]
+  }
+
+config :rocketpay, RocketpayWeb.Endpoint,
+  url: [host: "localhost"]
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

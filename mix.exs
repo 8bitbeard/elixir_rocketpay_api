@@ -7,7 +7,7 @@ defmodule Rocketpay.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
+      compilers: [:gettext] ++ Mix.compilers() ++ [:phoenix_swagger],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -54,7 +54,10 @@ defmodule Rocketpay.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:bcrypt_elixir, "~> 3.0"},
       {:decimal, "~> 2.0"},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:phoenix_swagger, "~> 0.8"},
+      {:ex_json_schema, "~> 0.5"},
+      {:poison, "~> 3.1"}
     ]
   end
 

@@ -57,4 +57,18 @@ defmodule RocketpayWeb.Router do
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end
+
+  def swagger_info do
+    %{
+      basePath: "/api",
+      info: %{
+        version: "1.0",
+        title: "Rocketpay API"
+      },
+      tags: [
+        %{name: "Users", description: "Operations about Users"},
+        %{name: "Accounts", description: "Operations about Accounts"}
+      ]
+    }
+  end
 end

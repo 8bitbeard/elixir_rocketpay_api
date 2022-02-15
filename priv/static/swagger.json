@@ -1,0 +1,99 @@
+{
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Operations about Users"
+    },
+    {
+      "name": "Accounts",
+      "description": "Operations about Accounts"
+    }
+  ],
+  "swagger": "2.0",
+  "paths": {
+    "/api/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Cadastro de um novo usuário no sistema",
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/UserParams"
+            },
+            "description": "Created"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/UserParams"
+            },
+            "required": true,
+            "name": "user",
+            "in": "body",
+            "description": "Parâmetros de criação de um novo User"
+          }
+        ],
+        "operationId": "RocketpayWeb.UsersController.create",
+        "description": "Essa é uma descrição do endpoint",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "info": {
+    "version": "1.0",
+    "title": "Rocketpay API"
+  },
+  "host": "localhost:4000",
+  "definitions": {
+    "UserParams": {
+      "type": "object",
+      "title": "User parameters",
+      "required": [
+        "age",
+        "password",
+        "email",
+        "nickname",
+        "name"
+      ],
+      "properties": {
+        "password": {
+          "type": "string",
+          "description": "Users password"
+        },
+        "nickname": {
+          "type": "string",
+          "description": "Users nickname"
+        },
+        "name": {
+          "type": "string",
+          "description": "Users name"
+        },
+        "email": {
+          "type": "string",
+          "description": "Users email"
+        },
+        "age": {
+          "type": "integer",
+          "description": "Users age"
+        }
+      },
+      "example": {
+        "password": "joe123",
+        "nickname": "joe",
+        "name": "Joe",
+        "email": "joe@example.com",
+        "age": 45
+      },
+      "description": "Users"
+    }
+  },
+  "basePath": "/api"
+}
