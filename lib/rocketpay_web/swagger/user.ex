@@ -19,10 +19,10 @@ defmodule RocketpayWeb.Swagger.User do
         description("Essa é uma descrição do endpoint")
 
         parameters do
-          user(:body, Schema.ref(:UserParams), "Parâmetros de criação de um novo User", required: true)
+          body(:body, Schema.ref(:UserParams), "Parâmetros de criação de um novo User", required: true)
         end
 
-        response(201, "Created", Schema.ref(:UserParams))
+        response(201, "Created", Schema.ref(:User))
       end
     end
   end

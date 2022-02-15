@@ -5,7 +5,7 @@ defmodule RocketpayWeb.Swagger.Schemas.User do
     %{
       UserParams:
         swagger_schema do
-          title("User parameters")
+          title("CreateUser")
           description("Users")
 
           properties do
@@ -17,6 +17,29 @@ defmodule RocketpayWeb.Swagger.Schemas.User do
           end
 
           example(%{
+            name: "Joe",
+            nickname: "joe",
+            email: "joe@example.com",
+            password: "joe123",
+            age: 45
+          })
+        end,
+      User:
+        swagger_schema do
+          title("User")
+          description("User data")
+
+          properties do
+            id(:string, "User id")
+            name(:string, "Users name")
+            nickname(:string, "Users nickname")
+            email(:string, "Users email")
+            password(:string, "Users password")
+            age(:integer, "Users age")
+          end
+
+          example(%{
+            id: "75837acb-3f3d-407e-ac27-f245a41fecfc",
             name: "Joe",
             nickname: "joe",
             email: "joe@example.com",

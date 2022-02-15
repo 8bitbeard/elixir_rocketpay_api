@@ -20,7 +20,7 @@
         "responses": {
           "201": {
             "schema": {
-              "$ref": "#/definitions/UserParams"
+              "$ref": "#/definitions/User"
             },
             "description": "Created"
           }
@@ -34,7 +34,7 @@
               "$ref": "#/definitions/UserParams"
             },
             "required": true,
-            "name": "user",
+            "name": "body",
             "in": "body",
             "description": "Parâmetros de criação de um novo User"
           }
@@ -49,13 +49,18 @@
   },
   "info": {
     "version": "1.0",
-    "title": "Rocketpay API"
+    "title": "Rocketpay API",
+    "description": "API Documentation for Rocketpay v1",
+    "contact": {
+      "name": "Wilton Souza",
+      "email": "willsouzafilho@gmail.com"
+    }
   },
   "host": "localhost:4000",
   "definitions": {
     "UserParams": {
       "type": "object",
-      "title": "User parameters",
+      "title": "CreateUser",
       "required": [
         "age",
         "password",
@@ -93,6 +98,45 @@
         "age": 45
       },
       "description": "Users"
+    },
+    "User": {
+      "type": "object",
+      "title": "User",
+      "properties": {
+        "password": {
+          "type": "string",
+          "description": "Users password"
+        },
+        "nickname": {
+          "type": "string",
+          "description": "Users nickname"
+        },
+        "name": {
+          "type": "string",
+          "description": "Users name"
+        },
+        "id": {
+          "type": "string",
+          "description": "User id"
+        },
+        "email": {
+          "type": "string",
+          "description": "Users email"
+        },
+        "age": {
+          "type": "integer",
+          "description": "Users age"
+        }
+      },
+      "example": {
+        "password": "joe123",
+        "nickname": "joe",
+        "name": "Joe",
+        "id": "75837acb-3f3d-407e-ac27-f245a41fecfc",
+        "email": "joe@example.com",
+        "age": 45
+      },
+      "description": "User data"
     }
   },
   "basePath": "/api"

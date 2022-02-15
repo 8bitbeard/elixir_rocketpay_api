@@ -14,7 +14,7 @@ defmodule RocketpayWeb.Router do
   scope "/api", RocketpayWeb do
     pipe_through :api
 
-    get "/:filename", WelcomeController, :index
+    # get "/:filename", WelcomeController, :index
 
     post "/users", UsersController, :create
   end
@@ -25,6 +25,12 @@ defmodule RocketpayWeb.Router do
     post "/accounts/:id/deposit", AccountsController, :deposit
     post "/accounts/:id/withdraw", AccountsController, :withdraw
     post "/accounts/transaction", AccountsController, :transaction
+  end
+
+  scope "/api/swagger" do
+    forward "/", PhoenixSwagger.Plug.SwaggerUI,
+      otp_app: :rocketpay,
+      swagger_file: "swagger.json"
   end
 
   # Enables LiveDashboard only for development
@@ -63,7 +69,12 @@ defmodule RocketpayWeb.Router do
       basePath: "/api",
       info: %{
         version: "1.0",
-        title: "Rocketpay API"
+        title: "Rocketpay API",
+        description: "API Documentation for Rocketpay v1",
+        contact: %{
+          name: "Wilton Souza",
+          email: "willsouzafilho@gmail.com"
+        }
       },
       tags: [
         %{name: "Users", description: "Operations about Users"},
