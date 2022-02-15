@@ -37,7 +37,6 @@ defmodule RocketpayWeb.AccountsControllerTest do
              } = response
     end
 
-
     test "when there are invalid params, returns an error", %{conn: conn, account_id: account_id} do
       params = %{"value" => "banana"}
 
@@ -46,7 +45,7 @@ defmodule RocketpayWeb.AccountsControllerTest do
         |> post(Routes.accounts_path(conn, :deposit, account_id, params))
         |> json_response(:bad_request)
 
-      expected_response = %{"message" => "Invalid deposit value!"}
+      expected_response = %{"message" => "Invalid transaction value!"}
 
       assert response == expected_response
     end
@@ -100,7 +99,91 @@ defmodule RocketpayWeb.AccountsControllerTest do
         |> post(Routes.accounts_path(conn, :withdraw, account_id, params))
         |> json_response(:bad_request)
 
-      expected_response = %{"message" => "Invalid deposit value!"}
+      expected_response = %{"message" => "Invalid transaction value!"}
+
+      assert response == expected_response
+    end
+  end
+
+  describe "transaction/2" do
+    setup %{conn: conn} do
+      from_params = %{
+        name: "From User",
+        password: "123456",
+        nickname: "fromuser",
+        email: "fromuser@example.com",
+        age: 27
+      }
+
+      to_params = %{
+        name: "To User",
+        password: "123456",
+        nickname: "touser",
+        email: "touser@example.com",
+        age: 27
+      }
+
+      {:ok, %User{account: %Account{id: from_account}}} = Rocketpay.create_user(from_params)
+      {:ok, %User{account: %Account{id: to_account}}} = Rocketpay.create_user(to_params)
+
+      deposit_params = %{"value" => "50.00"}
+
+      conn = put_req_header(conn, "authorization", "Basic YmFuYW5hOm5hbmljYTEyMw==")
+
+      conn
+      |> post(Routes.accounts_path(conn, :deposit, from_account, deposit_params))
+      |> json_response(:ok)
+
+      {:ok, conn: conn, from_account: from_account, to_account: to_account}
+    end
+
+    test "when all params are valid, make a transaction", %{
+      conn: conn,
+      from_account: from_account,
+      to_account: to_account
+    } do
+      transaction_params = %{
+        "from" => from_account,
+        "to" => to_account,
+        "value" => "15.00"
+      }
+
+      response =
+        conn
+        |> post(Routes.accounts_path(conn, :transaction, transaction_params))
+        |> json_response(:ok)
+
+      expected_response = %{
+        "message" => "Transaction done successfully",
+        "transaction" => %{
+          "from_account" => %{
+            "balance" => "35.00",
+            "id" => from_account
+          },
+          "to_account" => %{"balance" => "15.00", "id" => to_account}
+        }
+      }
+
+      assert response == expected_response
+    end
+
+    test "when there are invalid params, returns an error", %{
+      conn: conn,
+      from_account: from_account,
+      to_account: to_account
+    } do
+      transaction_params = %{
+        "from" => from_account,
+        "to" => to_account,
+        "value" => "banana"
+      }
+
+      response =
+        conn
+        |> post(Routes.accounts_path(conn, :transaction, transaction_params))
+        |> json_response(:bad_request)
+
+      expected_response = %{"message" => "Invalid transaction value!"}
 
       assert response == expected_response
     end
