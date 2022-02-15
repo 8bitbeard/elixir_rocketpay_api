@@ -21,6 +21,10 @@ config :rocketpay, Rocketpay.Repo,
   migration_primary_key: [type: :binary_id],
   migration_foreign_key: [type: :binary_id]
 
+config :rocketpay, :basic_auth,
+  username: "banana",
+  password: "nanica123"
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
