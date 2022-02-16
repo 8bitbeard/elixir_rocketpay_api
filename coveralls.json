@@ -9,6 +9,7 @@
     "lib/rocketpay_web/gettext.ex",
     "lib/rocketpay_web/telemetry.ex",
     "lib/rocketpay_web/views/error_helpers.ex",
+    "lib/rocketpay_web/swagger",
     "test/support"
   ]
 }

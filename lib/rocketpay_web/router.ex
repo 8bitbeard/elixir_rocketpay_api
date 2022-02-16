@@ -27,11 +27,13 @@ defmodule RocketpayWeb.Router do
     post "/accounts/transaction", AccountsController, :transaction
   end
 
+  # coveralls-ignore-start
   scope "/api/swagger" do
     forward "/", PhoenixSwagger.Plug.SwaggerUI,
       otp_app: :rocketpay,
       swagger_file: "swagger.json"
   end
+  # coveralls-ignore-stop
 
   # Enables LiveDashboard only for development
   #
@@ -64,6 +66,7 @@ defmodule RocketpayWeb.Router do
     end
   end
 
+  # coveralls-ignore-start
   def swagger_info do
     %{
       basePath: "/api",
@@ -82,4 +85,5 @@ defmodule RocketpayWeb.Router do
       ]
     }
   end
+  # coveralls-ignore-stop
 end
