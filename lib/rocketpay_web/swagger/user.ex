@@ -1,5 +1,4 @@
 defmodule RocketpayWeb.Swagger.User do
-
   defmacro __using__(_) do
     quote do
       use PhoenixSwagger
@@ -19,7 +18,9 @@ defmodule RocketpayWeb.Swagger.User do
         description("Essa é uma descrição do endpoint")
 
         parameters do
-          body(:body, Schema.ref(:UserParams), "Parâmetros de criação de um novo User", required: true)
+          body(:body, Schema.ref(:UserParams), "Parâmetros de criação de um novo User",
+            required: true
+          )
         end
 
         response(201, "Created", Schema.ref(:User))

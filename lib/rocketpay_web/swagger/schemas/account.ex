@@ -51,7 +51,7 @@ defmodule RocketpayWeb.Swagger.Schemas.Account do
 
           properties do
             message(:string, "Message of transaction", example: "Balance changed successfully")
-            account Schema.ref(:Account)
+            account(Schema.ref(:Account))
           end
         end,
       TransactionResponse:
@@ -61,12 +61,15 @@ defmodule RocketpayWeb.Swagger.Schemas.Account do
 
           properties do
             message(:string, "Message of transaction", example: "Transaction done successfully")
-            transaction(Schema.new do
-              properties do
-                from_account Schema.ref(:Account)
-                to_account Schema.ref(:Account)
+
+            transaction(
+              Schema.new do
+                properties do
+                  from_account(Schema.ref(:Account))
+                  to_account(Schema.ref(:Account))
+                end
               end
-            end)
+            )
           end
         end,
       OperationErrorResponse:

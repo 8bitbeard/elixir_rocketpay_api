@@ -142,7 +142,8 @@ defmodule Rocketpay.Accounts.OperationTest do
         |> Operation.call(:deposit)
         |> Repo.transaction()
 
-      assert {:error, :deposit, "Invalid transaction value!", %{account_deposit: _value}} = response
+      assert {:error, :deposit, "Invalid transaction value!", %{account_deposit: _value}} =
+               response
     end
   end
 end

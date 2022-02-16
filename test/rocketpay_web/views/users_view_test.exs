@@ -21,17 +21,17 @@ defmodule RocketpayWeb.UsersViewTest do
     response = render(UsersView, "create.json", user: user)
 
     expected_response = %{
-       message: "User created",
-       user: %{
-         account: %{
-           balance: Decimal.new("0.00"),
-           id: account_id
-         },
-         id: user_id,
-         name: "Test User",
-         nickname: "testuser"
-       }
-     }
+      message: "User created",
+      user: %{
+        account: %{
+          balance: Decimal.new("0.00"),
+          id: account_id
+        },
+        id: user_id,
+        name: "Test User",
+        nickname: "testuser"
+      }
+    }
 
     assert expected_response == response
   end

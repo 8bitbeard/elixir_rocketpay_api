@@ -19,6 +19,7 @@ defmodule RocketpayWeb.Swagger.Account do
 
         parameters do
           id(:path, :string, "Account id", required: true)
+
           body(:body, Schema.ref(:OperationRequest), "Parâmetros para realização da operação",
             required: true
           )
@@ -46,6 +47,7 @@ defmodule RocketpayWeb.Swagger.Account do
 
         parameters do
           id(:path, :string, "Account id", required: true)
+
           body(:body, Schema.ref(:OperationRequest), "Parâmetros para realização da operação",
             required: true
           )
@@ -72,7 +74,10 @@ defmodule RocketpayWeb.Swagger.Account do
         description("Essa é uma descrição do endpoint")
 
         parameters do
-          body(:body, Schema.ref(:TransactionRequest), "Parâmetros para realização da transferência",
+          body(
+            :body,
+            Schema.ref(:TransactionRequest),
+            "Parâmetros para realização da transferência",
             required: true
           )
         end

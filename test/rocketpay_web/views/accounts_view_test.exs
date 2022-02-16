@@ -4,8 +4,8 @@ defmodule RocketpayWeb.AccountsViewTest do
   import Phoenix.View
 
   alias Rocketpay.{Account, User}
-  alias RocketpayWeb.AccountsView
   alias Rocketpay.Accounts.Transactions.Response, as: TransactionResponse
+  alias RocketpayWeb.AccountsView
 
   test "renders update.json" do
     params = %{

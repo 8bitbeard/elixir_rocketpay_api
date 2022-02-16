@@ -33,6 +33,7 @@ defmodule RocketpayWeb.Router do
       otp_app: :rocketpay,
       swagger_file: "swagger.json"
   end
+
   # coveralls-ignore-stop
 
   # Enables LiveDashboard only for development
@@ -85,5 +86,6 @@ defmodule RocketpayWeb.Router do
       ]
     }
   end
+
   # coveralls-ignore-stop
 end

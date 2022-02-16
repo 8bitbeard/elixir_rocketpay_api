@@ -2,8 +2,8 @@ defmodule Rocketpay.Accounts.DepositTest do
   use Rocketpay.DataCase, async: true
 
   alias Rocketpay.{Account, Repo, User}
-  alias Rocketpay.Users.Create
   alias Rocketpay.Accounts.Deposit
+  alias Rocketpay.Users.Create
 
   describe "call/1" do
     test "when all params are valid, returns an user" do

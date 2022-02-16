@@ -28,13 +28,14 @@ config :rocketpay, :basic_auth,
 config :rocketpay, :phoenix_swagger,
   swagger_files: %{
     "priv/static/swagger.json" => [
-      router: RocketpayWeb.Router,     # phoenix routes will be converted to swagger paths
-      endpoint: RocketpayWeb.Endpoint  # (optional) endpoint config used to set host, port and https schemes.
+      # phoenix routes will be converted to swagger paths
+      router: RocketpayWeb.Router,
+      # (optional) endpoint config used to set host, port and https schemes.
+      endpoint: RocketpayWeb.Endpoint
     ]
   }
 
-config :rocketpay, RocketpayWeb.Endpoint,
-  url: [host: "localhost"]
+config :rocketpay, RocketpayWeb.Endpoint, url: [host: "localhost"]
 
 # Configures the mailer
 #

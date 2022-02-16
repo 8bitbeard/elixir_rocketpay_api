@@ -2,8 +2,8 @@ defmodule Rocketpay.Accounts.Transactions.ResponseTest do
   use Rocketpay.DataCase, async: true
 
   alias Rocketpay.{Account, User}
-  alias Rocketpay.Users.Create
   alias Rocketpay.Accounts.Transactions.Response, as: TransactionResponse
+  alias Rocketpay.Users.Create
 
   describe "build/2" do
     test "when all params are valid, returns an user" do

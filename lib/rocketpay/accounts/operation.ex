@@ -4,6 +4,7 @@ defmodule Rocketpay.Accounts.Operation do
 
   def call(%{"id" => id, "value" => value}, operation) do
     operation_name = account_operation_name(operation)
+
     Multi.new()
     |> Multi.run(operation_name, fn repo, _changes -> get_account(repo, id) end)
     |> Multi.run(operation, fn repo, changes ->

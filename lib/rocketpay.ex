@@ -1,5 +1,4 @@
 defmodule Rocketpay do
-
   alias Rocketpay.Users.Create, as: UserCreate
 
   alias Rocketpay.Accounts.{Deposit, Transaction, Withdraw}
