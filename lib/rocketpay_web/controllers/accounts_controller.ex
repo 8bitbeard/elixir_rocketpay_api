@@ -1,5 +1,6 @@
 defmodule RocketpayWeb.AccountsController do
   use RocketpayWeb, :controller
+  use RocketpayWeb.Swagger.Account
 
   alias Rocketpay.Account
   alias Rocketpay.Accounts.Transactions.Response, as: TransactionResponse

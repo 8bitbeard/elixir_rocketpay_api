@@ -45,6 +45,41 @@
           "application/json"
         ]
       }
+    },
+    "/api/accounts/{id}/deposit": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Operação de depósito em uma conta",
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            },
+            "description": "Created"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/Operation"
+            },
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "description": "Parâmetros para realização da operação"
+          }
+        ],
+        "operationId": "RocketpayWeb.AccountsController.deposit",
+        "description": "Essa é uma descrição do endpoint",
+        "consumes": [
+          "application/json"
+        ]
+      }
     }
   },
   "info": {
@@ -137,6 +172,44 @@
         "age": 45
       },
       "description": "User data"
+    },
+    "Operation": {
+      "type": "object",
+      "title": "Operation",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Operation value"
+        },
+        "id": {
+          "type": "string",
+          "description": "Account id"
+        }
+      },
+      "example": {
+        "value": "5.15",
+        "id": "d1103a13-d6c4-4d61-a632-3c8844f6e5f5"
+      },
+      "description": "Operation"
+    },
+    "Account": {
+      "type": "object",
+      "title": "Account",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Account id"
+        },
+        "balance": {
+          "type": "string",
+          "description": "Account balance"
+        }
+      },
+      "example": {
+        "id": "d1103a13-d6c4-4d61-a632-3c8844f6e5f5",
+        "balance": "0.00"
+      },
+      "description": "Account"
     }
   },
   "basePath": "/api"
