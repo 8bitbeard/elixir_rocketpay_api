@@ -30,22 +30,45 @@ defmodule RocketpayWeb.Swagger.Schemas.User do
           description("User data")
 
           properties do
-            id(:string, "User id")
-            name(:string, "Users name")
-            nickname(:string, "Users nickname")
-            email(:string, "Users email")
-            password(:string, "Users password")
-            age(:integer, "Users age")
-          end
+            message(:string, "Message", example: "User created")
 
-          example(%{
-            id: "75837acb-3f3d-407e-ac27-f245a41fecfc",
-            name: "Joe",
-            nickname: "joe",
-            email: "joe@example.com",
-            password: "joe123",
-            age: 45
-          })
+            user(
+              Schema.new do
+                properties do
+                  account(Schema.ref(:Account))
+                end
+              end
+            )
+
+            id(:string, "User id", example: "75837acb-3f3d-407e-ac27-f245a41fecfc")
+            name(:string, "Users name", example: "Joe")
+            nickname(:string, "Users nickname", example: "joe")
+          end
+        end,
+      UserErrorResponse:
+        swagger_schema do
+          title("UserErrorResponse")
+          description("User")
+
+          properties do
+            message(
+              Schema.new do
+                properties do
+                  age(:array, "Age related errors",
+                    example: ["must be greater than or equal to 18"]
+                  )
+
+                  email(:array, "Email related errors", example: ["has invalid format"])
+                  name(:array, "Name related errors", example: ["can't be blank"])
+                  nickname(:array, "Nickname related errors", example: ["can't be blank"])
+
+                  password(:array, "Password related errors",
+                    example: ["should be at least 6 character(s)"]
+                  )
+                end
+              end
+            )
+          end
         end
     }
   end

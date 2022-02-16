@@ -68,7 +68,7 @@ defmodule RocketpayWeb.Router do
     %{
       basePath: "/api",
       info: %{
-        version: "1.0",
+        version: "1.0.0",
         title: "Rocketpay API",
         description: "API Documentation for Rocketpay v1",
         contact: %{

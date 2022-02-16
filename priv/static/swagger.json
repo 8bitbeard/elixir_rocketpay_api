@@ -18,6 +18,15 @@
         ],
         "summary": "Cadastro de um novo usuário no sistema",
         "responses": {
+          "500": {
+            "description": "Internal server error"
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/UserErrorResponse"
+            },
+            "description": "Bad request"
+          },
           "201": {
             "schema": {
               "$ref": "#/definitions/User"
@@ -46,18 +55,30 @@
         ]
       }
     },
-    "/api/accounts/{id}/deposit": {
+    "/api/accounts/{id}/withdraw": {
       "post": {
         "tags": [
           "Accounts"
         ],
-        "summary": "Operação de depósito em uma conta",
+        "summary": "Operação de saque de uma conta",
         "responses": {
-          "201": {
+          "500": {
+            "description": "Internal server error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
             "schema": {
-              "$ref": "#/definitions/Operation"
+              "$ref": "#/definitions/OperationErrorResponse"
             },
-            "description": "Created"
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/OperationResponse"
+            },
+            "description": "Ok"
           }
         },
         "produces": [
@@ -65,8 +86,69 @@
         ],
         "parameters": [
           {
+            "type": "string",
+            "required": true,
+            "name": "id",
+            "in": "path",
+            "description": "Account id"
+          },
+          {
             "schema": {
-              "$ref": "#/definitions/Operation"
+              "$ref": "#/definitions/OperationRequest"
+            },
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "description": "Parâmetros para realização da operação"
+          }
+        ],
+        "operationId": "RocketpayWeb.AccountsController.withdraw",
+        "description": "Essa é uma descrição do endpoint",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/accounts/{id}/deposit": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Operação de depósito em uma conta",
+        "responses": {
+          "500": {
+            "description": "Internal server error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/OperationErrorResponse"
+            },
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/OperationResponse"
+            },
+            "description": "Ok"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "required": true,
+            "name": "id",
+            "in": "path",
+            "description": "Account id"
+          },
+          {
+            "schema": {
+              "$ref": "#/definitions/OperationRequest"
             },
             "required": true,
             "name": "body",
@@ -80,10 +162,57 @@
           "application/json"
         ]
       }
+    },
+    "/api/accounts/transaction": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Operação de transferência de uma conta para outra",
+        "responses": {
+          "500": {
+            "description": "Internal server error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/OperationErrorResponse"
+            },
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TransactionResponse"
+            },
+            "description": "Ok"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/TransactionRequest"
+            },
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "description": "Parâmetros para realização da transferência"
+          }
+        ],
+        "operationId": "RocketpayWeb.AccountsController.transaction",
+        "description": "Essa é uma descrição do endpoint",
+        "consumes": [
+          "application/json"
+        ]
+      }
     }
   },
   "info": {
-    "version": "1.0",
+    "version": "1.0.0",
     "title": "Rocketpay API",
     "description": "API Documentation for Rocketpay v1",
     "contact": {
@@ -134,63 +263,171 @@
       },
       "description": "Users"
     },
+    "UserErrorResponse": {
+      "type": "object",
+      "title": "UserErrorResponse",
+      "properties": {
+        "message": {
+          "type": "object",
+          "properties": {
+            "password": {
+              "type": "array",
+              "example": [
+                "should be at least 6 character(s)"
+              ],
+              "description": "Password related errors"
+            },
+            "nickname": {
+              "type": "array",
+              "example": [
+                "can't be blank"
+              ],
+              "description": "Nickname related errors"
+            },
+            "name": {
+              "type": "array",
+              "example": [
+                "can't be blank"
+              ],
+              "description": "Name related errors"
+            },
+            "email": {
+              "type": "array",
+              "example": [
+                "has invalid format"
+              ],
+              "description": "Email related errors"
+            },
+            "age": {
+              "type": "array",
+              "example": [
+                "must be greater than or equal to 18"
+              ],
+              "description": "Age related errors"
+            }
+          }
+        }
+      },
+      "description": "User"
+    },
     "User": {
       "type": "object",
       "title": "User",
       "properties": {
-        "password": {
-          "type": "string",
-          "description": "Users password"
+        "user": {
+          "type": "object",
+          "properties": {
+            "account": {
+              "$ref": "#/definitions/Account"
+            }
+          }
         },
         "nickname": {
           "type": "string",
+          "example": "joe",
           "description": "Users nickname"
         },
         "name": {
           "type": "string",
+          "example": "Joe",
           "description": "Users name"
+        },
+        "message": {
+          "type": "string",
+          "example": "User created",
+          "description": "Message"
         },
         "id": {
           "type": "string",
+          "example": "75837acb-3f3d-407e-ac27-f245a41fecfc",
           "description": "User id"
-        },
-        "email": {
-          "type": "string",
-          "description": "Users email"
-        },
-        "age": {
-          "type": "integer",
-          "description": "Users age"
         }
-      },
-      "example": {
-        "password": "joe123",
-        "nickname": "joe",
-        "name": "Joe",
-        "id": "75837acb-3f3d-407e-ac27-f245a41fecfc",
-        "email": "joe@example.com",
-        "age": 45
       },
       "description": "User data"
     },
-    "Operation": {
+    "TransactionResponse": {
+      "type": "object",
+      "title": "TransactionResponse",
+      "properties": {
+        "transaction": {
+          "type": "object",
+          "properties": {
+            "to_account": {
+              "$ref": "#/definitions/Account"
+            },
+            "from_account": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        },
+        "message": {
+          "type": "string",
+          "example": "Transaction done successfully",
+          "description": "Message of transaction"
+        }
+      },
+      "description": "Response of transaction operations"
+    },
+    "TransactionRequest": {
+      "type": "object",
+      "title": "Transaction",
+      "properties": {
+        "value": {
+          "type": "string",
+          "example": "15.12",
+          "description": "Value of transaction"
+        },
+        "to": {
+          "type": "string",
+          "example": "3b0f83f8-9ad9-4913-92f5-cd76a4997e6a",
+          "description": "Id of account that the transaction is going to"
+        },
+        "from": {
+          "type": "string",
+          "example": "39b05f73-ee6a-46a3-9db7-8363a94287d1",
+          "description": "Id of account that the transaction is comming from"
+        }
+      },
+      "description": "Transaction"
+    },
+    "OperationResponse": {
+      "type": "object",
+      "title": "OperationResponse",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Balance changed successfully",
+          "description": "Message of transaction"
+        },
+        "account": {
+          "$ref": "#/definitions/Account"
+        }
+      },
+      "description": "Response of Deposit and Withdraw operations"
+    },
+    "OperationRequest": {
       "type": "object",
       "title": "Operation",
       "properties": {
         "value": {
           "type": "string",
+          "example": "5.15",
           "description": "Operation value"
-        },
-        "id": {
-          "type": "string",
-          "description": "Account id"
         }
       },
-      "example": {
-        "value": "5.15",
-        "id": "d1103a13-d6c4-4d61-a632-3c8844f6e5f5"
-      },
       "description": "Operation"
+    },
+    "OperationErrorResponse": {
+      "type": "object",
+      "title": "OperationErrorResponse",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Invalid transaction value!",
+          "description": "Error message"
+        }
+      },
+      "description": "Error response for operation"
     },
     "Account": {
       "type": "object",
