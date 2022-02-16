@@ -53,13 +53,13 @@ jobs:
       env:
         MIX_ENV: test
 
-#     - name: Run codecov script
-#       env:
-#           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-#       run: |
-#           curl -Os https://uploader.codecov.io/latest/linux/codecov
-#           chmod +x codecov
-#           ./codecov
+    - name: Run codecov script
+      env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: |
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          ./codecov
 
     - name: Run tests
       run: mix test
