@@ -25,9 +25,13 @@ config :rocketpay, RocketpayWeb.Auth.Guardian,
   issuer: "rocketpay",
   secret_key: "HGr3m4S9/UtVlhV04PVdPQAis5Ygj8L7FYk45a8yh6HO3FtqiRHpLOInEXQifxf7"
 
-config :rocketpay, :basic_auth,
-  username: "banana",
-  password: "nanica123"
+config :rocketpay, RocketpayWeb.Auth.Pipeline,
+  module: RocketpayWeb.Auth.Guardian,
+  error_handler: RocketpayWeb.Auth.ErrorHandler
+
+# config :rocketpay, :basic_auth,
+#   username: "banana",
+#   password: "nanica123"
 
 config :rocketpay, :phoenix_swagger,
   swagger_files: %{

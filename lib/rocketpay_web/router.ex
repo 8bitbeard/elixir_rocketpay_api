@@ -1,14 +1,15 @@
 defmodule RocketpayWeb.Router do
   use RocketpayWeb, :router
 
-  import Plug.BasicAuth
+  # import Plug.BasicAuth
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   pipeline :auth do
-    plug :basic_auth, Application.compile_env(:rocketpay, :basic_auth)
+    # plug :basic_auth, Application.compile_env(:rocketpay, :basic_auth)
+    plug RocketpayWeb.Auth.Pipeline
   end
 
   scope "/api", RocketpayWeb do

@@ -2,6 +2,7 @@ defmodule RocketpayWeb.AccountsControllerTest do
   use RocketpayWeb.ConnCase, async: true
 
   alias Rocketpay.{Account, User}
+  alias RocketpayWeb.Auth.Guardian
 
   describe "deposit/2" do
     setup %{conn: conn} do
@@ -13,9 +14,11 @@ defmodule RocketpayWeb.AccountsControllerTest do
         age: 27
       }
 
-      {:ok, %User{account: %Account{id: account_id}}} = Rocketpay.create_user(params)
+      {:ok, %User{account: %Account{id: account_id}} = user} = Rocketpay.create_user(params)
 
-      conn = put_req_header(conn, "authorization", "Basic YmFuYW5hOm5hbmljYTEyMw==")
+      {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
 
       {:ok, conn: conn, account_id: account_id}
     end
@@ -61,11 +64,13 @@ defmodule RocketpayWeb.AccountsControllerTest do
         age: 27
       }
 
-      {:ok, %User{account: %Account{id: account_id}}} = Rocketpay.create_user(params)
+      {:ok, %User{account: %Account{id: account_id}} = user} = Rocketpay.create_user(params)
 
       deposit_params = %{"value" => "50.00"}
 
-      conn = put_req_header(conn, "authorization", "Basic YmFuYW5hOm5hbmljYTEyMw==")
+      {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
 
       conn
       |> post(Routes.accounts_path(conn, :deposit, account_id, deposit_params))
@@ -123,12 +128,14 @@ defmodule RocketpayWeb.AccountsControllerTest do
         age: 27
       }
 
-      {:ok, %User{account: %Account{id: from_account}}} = Rocketpay.create_user(from_params)
+      {:ok, %User{account: %Account{id: from_account}} = user} = Rocketpay.create_user(from_params)
       {:ok, %User{account: %Account{id: to_account}}} = Rocketpay.create_user(to_params)
 
       deposit_params = %{"value" => "50.00"}
 
-      conn = put_req_header(conn, "authorization", "Basic YmFuYW5hOm5hbmljYTEyMw==")
+      {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
 
       conn
       |> post(Routes.accounts_path(conn, :deposit, from_account, deposit_params))
