@@ -13,6 +13,5 @@ defmodule Rocketpay.Error do
   end
 
   def build_user_not_found_error, do: build(:not_found, "User not found")
-  def build_invalid_operation_error, do: build(:bad_request, "Invalid operation!")
 end
 
