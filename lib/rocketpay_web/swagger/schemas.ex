@@ -3,7 +3,8 @@ defmodule RocketpayWeb.Swagger.Schemas do
     quote do
       @schemas [
         RocketpayWeb.Swagger.Schemas.User,
-        RocketpayWeb.Swagger.Schemas.Account
+        RocketpayWeb.Swagger.Schemas.Account,
+        RocketpayWeb.Swagger.Schemas.Auth
       ]
 
       def swagger_definitions do

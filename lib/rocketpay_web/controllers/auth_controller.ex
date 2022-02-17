@@ -1,5 +1,6 @@
 defmodule RocketpayWeb.AuthController do
   use RocketpayWeb, :controller
+  use RocketpayWeb.Swagger.Auth
 
   alias RocketpayWeb.Auth.Guardian
   alias RocketpayWeb.FallbackController

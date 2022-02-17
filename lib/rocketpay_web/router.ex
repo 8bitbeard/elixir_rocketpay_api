@@ -72,7 +72,6 @@ defmodule RocketpayWeb.Router do
   # coveralls-ignore-start
   def swagger_info do
     %{
-      basePath: "/api",
       info: %{
         version: "1.0.0",
         title: "Rocketpay API",
@@ -84,7 +83,8 @@ defmodule RocketpayWeb.Router do
       },
       tags: [
         %{name: "Users", description: "Operations about Users"},
-        %{name: "Accounts", description: "Operations about Accounts"}
+        %{name: "Accounts", description: "Operations about Accounts"},
+        %{name: "Authentication", description: "Operations about Authentication"}
       ]
     }
   end

@@ -7,6 +7,10 @@
     {
       "name": "Accounts",
       "description": "Operations about Accounts"
+    },
+    {
+      "name": "Authentication",
+      "description": "Operations about Authentication"
     }
   ],
   "swagger": "2.0",
@@ -49,6 +53,50 @@
           }
         ],
         "operationId": "RocketpayWeb.UsersController.create",
+        "description": "Essa é uma descrição do endpoint",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Autenticação de um usuário na aplicação",
+        "responses": {
+          "500": {
+            "description": "Internal server error"
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/AuthenticateErrorResponse"
+            },
+            "description": "Bad request"
+          },
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/AuthenticateResponse"
+            },
+            "description": "Created"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/AuthenticateParams"
+            },
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "description": "Parâmetros de autenticação do usuário"
+          }
+        ],
+        "operationId": "RocketpayWeb.AuthController.login",
         "description": "Essa é uma descrição do endpoint",
         "consumes": [
           "application/json"
@@ -429,6 +477,58 @@
       },
       "description": "Error response for operation"
     },
+    "AuthenticateResponse": {
+      "type": "object",
+      "title": "AuthenticateResponse",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJyb2NrZXRwYXkiLCJleHAaiOjE2NDc1Mzk1NjYsImlhdCI6MTY0NTEyMDM2NiwiaXNzIjoicm9ja2V0cGF5IiwianRpIjoiMDQ5MjlmNzItMzFhYi00MzMwLTg1M2YtOWY4ODU3Yjc5N2E2IiwibmJmIjoxNjQ1MTIwMzY1LCJzdWIiOiJmNmE0ODU2NS0yODFkLTQ0NTctYjViOS01OTU2NTE1MDgwOGEiLCJ0eXAiOiJhY2Nlc3MifQ.hVEmpUfPIElmN66FL2uCkfCmeSC_3usyAHOzj21or5wwpfXOtL9ujf-7X5wo7QhBK4rGVHH2tG_CQXPCaiy6vw",
+          "description": "Bearer token"
+        },
+        "message": {
+          "type": "string",
+          "example": "Authenticated successfully",
+          "description": "Success message"
+        }
+      },
+      "description": "Authenticate Response"
+    },
+    "AuthenticateParams": {
+      "type": "object",
+      "title": "Authenticate",
+      "required": [
+        "password",
+        "email"
+      ],
+      "properties": {
+        "password": {
+          "type": "string",
+          "description": "Users password"
+        },
+        "email": {
+          "type": "string",
+          "description": "Users email"
+        }
+      },
+      "example": {
+        "password": "joe123",
+        "email": "joe@example.com"
+      },
+      "description": "Authenticate"
+    },
+    "AuthenticateErrorResponse": {
+      "type": "object",
+      "title": "UserErrorResponse",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Wrong e-mail or password!",
+          "description": "Error message"
+        }
+      },
+      "description": "User"
+    },
     "Account": {
       "type": "object",
       "title": "Account",
@@ -448,6 +548,5 @@
       },
       "description": "Account"
     }
-  },
-  "basePath": "/api"
+  }
 }
