@@ -1,4 +1,6 @@
-# Rocketpay
+# Rocketpay API
+
+[![codecov](https://codecov.io/gh/8bitbeard/elixir_rocketpay_api/branch/main/graph/badge.svg?token=J6RG4XBIOM)](https://codecov.io/gh/8bitbeard/elixir_rocketpay_api)
 
 To start your Phoenix server:
 
