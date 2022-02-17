@@ -1,6 +1,6 @@
 defmodule Rocketpay.Users.Create do
   alias Ecto.Multi
-  alias Rocketpay.{Account, Repo, User}
+  alias Rocketpay.{Account, Error, Repo, User}
 
   def call(params) do
     Multi.new()
@@ -36,7 +36,7 @@ defmodule Rocketpay.Users.Create do
 
   defp run_transaction(multi) do
     case Repo.transaction(multi) do
-      {:error, _operation, reason, _changes} -> {:error, reason}
+      {:error, _operation, reason, _changes} -> {:error, Error.build(:bad_request, reason)}
       {:ok, %{preload_data: user}} -> {:ok, user}
     end
   end

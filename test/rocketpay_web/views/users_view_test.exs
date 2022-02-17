@@ -14,14 +14,16 @@ defmodule RocketpayWeb.UsersViewTest do
       email: "testuser@example.com",
       age: 27
     }
+    token = "token123"
 
     {:ok, %User{id: user_id, account: %Account{id: account_id}} = user} =
       Rocketpay.create_user(params)
 
-    response = render(UsersView, "create.json", user: user)
+    response = render(UsersView, "create.json", token: token, user: user)
 
     expected_response = %{
       message: "User created",
+      token: token,
       user: %{
         account: %{
           balance: Decimal.new("0.00"),

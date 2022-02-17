@@ -102,7 +102,9 @@ defmodule Rocketpay.Accounts.OperationTest do
         |> Operation.call(:invalid)
         |> Repo.transaction()
 
-      assert {:error, :invalid, "Invalid operation!", %{account_invalid: _value}} = response
+      assert {:error, :invalid,
+              %Rocketpay.Error{result: "Invalid operation!", status: :bad_request},
+              %{account_invalid: _value}} = response
     end
 
     test "returns an error when the account does not exists" do
@@ -142,8 +144,9 @@ defmodule Rocketpay.Accounts.OperationTest do
         |> Operation.call(:deposit)
         |> Repo.transaction()
 
-      assert {:error, :deposit, "Invalid transaction value!", %{account_deposit: _value}} =
-               response
+      assert {:error, :deposit,
+              %Rocketpay.Error{result: "Invalid transaction value!", status: :bad_request},
+              %{account_deposit: _value}} = response
     end
   end
 end

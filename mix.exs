@@ -57,7 +57,8 @@ defmodule Rocketpay.MixProject do
       {:excoveralls, "~> 0.10", only: :test},
       {:phoenix_swagger, "~> 0.8"},
       {:ex_json_schema, "~> 0.5"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:guardian, "~> 2.0"}
     ]
   end
 

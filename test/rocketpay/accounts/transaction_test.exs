@@ -82,7 +82,10 @@ defmodule Rocketpay.Accounts.TransactionTest do
 
       {:error, result} = Transaction.call(transaction_params)
 
-      expected_response = "Invalid transaction value!"
+      expected_response = %Rocketpay.Error{
+        result: "Invalid transaction value!",
+        status: :bad_request
+      }
 
       assert expected_response == result
     end

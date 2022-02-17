@@ -1,7 +1,7 @@
 defmodule Rocketpay.Users.CreateTest do
   use Rocketpay.DataCase, async: true
 
-  alias Rocketpay.{Repo, User}
+  alias Rocketpay.{Error, Repo, User}
   alias Rocketpay.Users.Create
 
   describe "call/1" do
@@ -29,13 +29,14 @@ defmodule Rocketpay.Users.CreateTest do
         age: 15
       }
 
-      {:error, changeset} = Create.call(params)
+      response = Create.call(params)
 
       expected_response = %{
         age: ["must be greater than or equal to 18"],
         password: ["can't be blank"]
       }
 
+      assert {:error, %Error{status: :bad_request, result: changeset}} = response
       assert expected_response == errors_on(changeset)
     end
   end

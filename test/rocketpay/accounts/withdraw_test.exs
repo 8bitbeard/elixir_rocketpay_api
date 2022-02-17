@@ -56,7 +56,10 @@ defmodule Rocketpay.Accounts.WithdrawTest do
 
       {:error, result} = Withdraw.call(withdraw_params)
 
-      expected_response = "Invalid transaction value!"
+      expected_response = %Rocketpay.Error{
+        result: "Invalid transaction value!",
+        status: :bad_request
+      }
 
       assert expected_response == result
     end
