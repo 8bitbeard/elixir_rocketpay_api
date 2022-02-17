@@ -4,7 +4,7 @@ defmodule RocketpayWeb.AuthView do
   def render("login.json", %{token: token}) do
     %{
       message: "Authenticated successfully",
-      token: token,
+      token: token
     }
   end
 end

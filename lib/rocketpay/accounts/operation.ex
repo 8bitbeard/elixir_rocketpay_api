@@ -36,8 +36,11 @@ defmodule Rocketpay.Accounts.Operation do
   defp handle_cast({:ok, value}, balance, :deposit), do: Decimal.add(balance, value)
   defp handle_cast({:ok, value}, balance, :withdraw), do: Decimal.sub(balance, value)
 
-  defp handle_cast({:ok, _value}, _balance, _operation), do: {:error, Error.build(:bad_request, "Invalid operation!")}
-  defp handle_cast(:error, _value, _operation), do: {:error, Error.build(:bad_request, "Invalid transaction value!")}
+  defp handle_cast({:ok, _value}, _balance, _operation),
+    do: {:error, Error.build(:bad_request, "Invalid operation!")}
+
+  defp handle_cast(:error, _value, _operation),
+    do: {:error, Error.build(:bad_request, "Invalid transaction value!")}
 
   # defp handle_cast({:ok, _value}, _balance, _operation), do: {:error, "Invalid operation!"}
   # defp handle_cast(:error, _value, _operation), do: {:error, "Invalid transaction value!"}

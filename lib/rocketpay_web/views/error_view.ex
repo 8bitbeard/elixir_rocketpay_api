@@ -37,4 +37,3 @@ defmodule RocketpayWeb.ErrorView do
   defp translate_value({:parameterized, Ecto.Enum, _map}), do: ""
   defp translate_value(value), do: to_string(value)
 end
-

@@ -18,7 +18,11 @@ defmodule RocketpayWeb.AuthControllerTest do
       {:ok, conn: conn, email: params.email, password: params.password}
     end
 
-    test "when all params are valid, authenticate the user", %{conn: conn, email: email, password: password} do
+    test "when all params are valid, authenticate the user", %{
+      conn: conn,
+      email: email,
+      password: password
+    } do
       params = %{
         email: email,
         password: password
@@ -51,7 +55,10 @@ defmodule RocketpayWeb.AuthControllerTest do
       assert expected_response == response
     end
 
-    test "when trying to authenticate with wrong password, returns an error", %{conn: conn, email: email} do
+    test "when trying to authenticate with wrong password, returns an error", %{
+      conn: conn,
+      email: email
+    } do
       params = %{
         email: email,
         password: "112233"
@@ -67,7 +74,10 @@ defmodule RocketpayWeb.AuthControllerTest do
       assert expected_response == response
     end
 
-    test "when not passing all the required parameters, returns an error", %{conn: conn, email: email} do
+    test "when not passing all the required parameters, returns an error", %{
+      conn: conn,
+      email: email
+    } do
       params = %{
         email: email
       }

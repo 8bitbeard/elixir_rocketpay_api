@@ -22,8 +22,8 @@ config :rocketpay, Rocketpay.Repo,
   migration_foreign_key: [type: :binary_id]
 
 config :rocketpay, RocketpayWeb.Auth.Guardian,
-       issuer: "rocketpay",
-       secret_key: "HGr3m4S9/UtVlhV04PVdPQAis5Ygj8L7FYk45a8yh6HO3FtqiRHpLOInEXQifxf7"
+  issuer: "rocketpay",
+  secret_key: "HGr3m4S9/UtVlhV04PVdPQAis5Ygj8L7FYk45a8yh6HO3FtqiRHpLOInEXQifxf7"
 
 config :rocketpay, :basic_auth,
   username: "banana",

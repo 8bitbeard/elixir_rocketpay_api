@@ -14,6 +14,7 @@ defmodule RocketpayWeb.UsersViewTest do
       email: "testuser@example.com",
       age: 27
     }
+
     token = "token123"
 
     {:ok, %User{id: user_id, account: %Account{id: account_id}} = user} =

@@ -4,8 +4,8 @@ defmodule RocketpayWeb.AuthViewTest do
   import Phoenix.View
 
   alias Rocketpay.User
-  alias RocketpayWeb.AuthView
   alias RocketpayWeb.Auth.Guardian
+  alias RocketpayWeb.AuthView
 
   setup do
     params = %{
