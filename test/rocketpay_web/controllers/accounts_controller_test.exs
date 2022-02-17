@@ -1,18 +1,14 @@
 defmodule RocketpayWeb.AccountsControllerTest do
   use RocketpayWeb.ConnCase, async: true
 
+  import Rocketpay.Factory
+
   alias Rocketpay.{Account, User}
   alias RocketpayWeb.Auth.Guardian
 
   describe "deposit/2" do
     setup %{conn: conn} do
-      params = %{
-        name: "Test User",
-        password: "123456",
-        nickname: "testuser",
-        email: "testuser@example.com",
-        age: 27
-      }
+      params = build(:user_from_params)
 
       {:ok, %User{account: %Account{id: account_id}} = user} = Rocketpay.create_user(params)
 
@@ -56,13 +52,7 @@ defmodule RocketpayWeb.AccountsControllerTest do
 
   describe "withdraw/2" do
     setup %{conn: conn} do
-      params = %{
-        name: "Test User",
-        password: "123456",
-        nickname: "testuser",
-        email: "testuser@example.com",
-        age: 27
-      }
+      params = build(:user_from_params)
 
       {:ok, %User{account: %Account{id: account_id}} = user} = Rocketpay.create_user(params)
 
@@ -112,21 +102,8 @@ defmodule RocketpayWeb.AccountsControllerTest do
 
   describe "transaction/2" do
     setup %{conn: conn} do
-      from_params = %{
-        name: "From User",
-        password: "123456",
-        nickname: "fromuser",
-        email: "fromuser@example.com",
-        age: 27
-      }
-
-      to_params = %{
-        name: "To User",
-        password: "123456",
-        nickname: "touser",
-        email: "touser@example.com",
-        age: 27
-      }
+      from_params = build(:user_from_params)
+      to_params = build(:user_to_params)
 
       {:ok, %User{account: %Account{id: from_account}} = user} = Rocketpay.create_user(from_params)
       {:ok, %User{account: %Account{id: to_account}}} = Rocketpay.create_user(to_params)

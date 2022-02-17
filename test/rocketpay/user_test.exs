@@ -1,33 +1,24 @@
 defmodule Rocketpay.UserTest do
   use Rocketpay.DataCase, async: true
 
+  import Rocketpay.Factory
+
   alias Ecto.Changeset
   alias Rocketpay.User
 
   describe "changeset/2" do
     test "when all params are valid, returns a valid changeset" do
-      params = %{
-        age: 30,
-        name: "User Test",
-        email: "usertest@example.com",
-        password: "123456",
-        nickname: "usertest"
-      }
+      params = build(:user_from_params)
 
       response = User.changeset(params)
 
-      assert %Changeset{changes: %{name: "User Test"} = changes, valid?: true} = response
+      assert %Changeset{changes: %{name: "Machina From User"} = changes, valid?: true} = response
       assert Map.has_key?(changes, :password_hash)
     end
 
     test "when there are some error, returns an invalid changeset" do
-      params = %{
-        age: 17,
-        name: "User Test",
-        email: "usertestexample.com",
-        password: "12345",
-        nickname: "usertest"
-      }
+      params =
+        build(:user_from_params, %{"age" => 17, "password" => "12345", "email" => "invalid.com"})
 
       response = User.changeset(params)
 

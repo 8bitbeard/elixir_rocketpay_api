@@ -1,39 +1,28 @@
 defmodule Rocketpay.GuardianTest do
   use RocketpayWeb.ConnCase, async: true
 
+  import Rocketpay.Factory
+
   alias RocketpayWeb.Auth.Guardian
 
   alias Rocketpay.{Account, User}
 
   setup %{conn: conn} do
-    params = %{
-      name: "Test User",
-      password: "123456",
-      nickname: "testuser",
-      email: "testuser@example.com",
-      age: 27
-    }
+    params = build(:user_from_params)
 
     {:ok, %User{id: user_id, account: %Account{}} = user} = Rocketpay.create_user(params)
 
     {:ok,
-     conn: conn, user: user, user_id: user_id, email: params.email, password: params.password}
+     conn: conn, user: user, user_id: user_id, email: params["email"], password: params["password"]}
   end
 
   describe "subject_for_token/2" do
     test "returns the user id when a valid user is passed" do
-      user = %User{
-        id: "userid",
-        name: "Test User",
-        nickname: "testuser",
-        email: "testuser@example.com",
-        password_hash: "passwordhash",
-        age: 27
-      }
+      user = build(:user)
 
       response = Guardian.subject_for_token(user, "anything_goes")
 
-      expected_response = {:ok, "userid"}
+      expected_response = {:ok, "3ad24a2c-ed8c-483f-86dc-0b607d4551ee"}
 
       assert expected_response == response
     end
@@ -45,7 +34,7 @@ defmodule Rocketpay.GuardianTest do
 
       response = Guardian.resource_from_claims(claims)
 
-      assert {:ok, %User{id: ^user_id, name: "Test User"}} = response
+      assert {:ok, %User{id: ^user_id, name: "Machina From User"}} = response
     end
   end
 

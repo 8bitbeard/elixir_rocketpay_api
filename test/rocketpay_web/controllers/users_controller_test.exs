@@ -1,15 +1,11 @@
 defmodule RocketpayWeb.UsersControllerTest do
   use RocketpayWeb.ConnCase, async: true
 
+  import Rocketpay.Factory
+
   describe "create/2" do
     test "when all params are valid, create a user", %{conn: conn} do
-      params = %{
-        name: "Test User",
-        password: "123456",
-        nickname: "testuser",
-        email: "testuser@example.com",
-        age: 27
-      }
+      params = build(:user_from_params)
 
       response =
         conn
@@ -24,20 +20,14 @@ defmodule RocketpayWeb.UsersControllerTest do
                    "id" => _account_id
                  },
                  "id" => _user_id,
-                 "name" => "Test User",
-                 "nickname" => "testuser"
+                 "name" => "Machina From User",
+                 "nickname" => "machinafromuser"
                }
              } = response
     end
 
     test "when the user password is smaller than 6 chars, returns an error", %{conn: conn} do
-      params = %{
-        name: "Test User",
-        password: "12345",
-        nickname: "testuser",
-        email: "testuser@example.com",
-        age: 27
-      }
+      params = build(:user_from_params, %{"password" => "12345"})
 
       response =
         conn
@@ -50,13 +40,7 @@ defmodule RocketpayWeb.UsersControllerTest do
     end
 
     test "when the user email is invalid, returns an error", %{conn: conn} do
-      params = %{
-        name: "Test User",
-        password: "123456",
-        nickname: "testuser",
-        email: "testuserexample.com",
-        age: 27
-      }
+      params = build(:user_from_params, %{"email" => "invalid.com"})
 
       response =
         conn
@@ -69,13 +53,7 @@ defmodule RocketpayWeb.UsersControllerTest do
     end
 
     test "when the user age is smaller than 18, returns an error", %{conn: conn} do
-      params = %{
-        name: "Test User",
-        password: "123456",
-        nickname: "testuser",
-        email: "testuser@example.com",
-        age: 17
-      }
+      params = build(:user_from_params, %{"age" => 17})
 
       response =
         conn

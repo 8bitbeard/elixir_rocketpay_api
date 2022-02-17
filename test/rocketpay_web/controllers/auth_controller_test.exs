@@ -1,21 +1,17 @@
 defmodule RocketpayWeb.AuthControllerTest do
   use RocketpayWeb.ConnCase, async: true
 
+  import Rocketpay.Factory
+
   alias Rocketpay.{Account, User}
 
   describe "login/2" do
     setup %{conn: conn} do
-      params = %{
-        name: "Test User",
-        password: "123456",
-        nickname: "testuser",
-        email: "testuser@example.com",
-        age: 27
-      }
+      params = build(:user_from_params)
 
       {:ok, %User{account: %Account{}}} = Rocketpay.create_user(params)
 
-      {:ok, conn: conn, email: params.email, password: params.password}
+      {:ok, conn: conn, email: params["email"], password: params["password"]}
     end
 
     test "when all params are valid, authenticate the user", %{
@@ -91,62 +87,5 @@ defmodule RocketpayWeb.AuthControllerTest do
 
       assert expected_response == response
     end
-
-    # test "when the user password is smaller than 6 chars, returns an error", %{conn: conn} do
-    #   params = %{
-    #     name: "Test User",
-    #     password: "12345",
-    #     nickname: "testuser",
-    #     email: "testuser@example.com",
-    #     age: 27
-    #   }
-
-    #   response =
-    #     conn
-    #     |> post(Routes.users_path(conn, :create, params))
-    #     |> json_response(:bad_request)
-
-    #   expected_response = %{"message" => %{"password" => ["should be at least 6 character(s)"]}}
-
-    #   assert response == expected_response
-    # end
-
-    # test "when the user email is invalid, returns an error", %{conn: conn} do
-    #   params = %{
-    #     name: "Test User",
-    #     password: "123456",
-    #     nickname: "testuser",
-    #     email: "testuserexample.com",
-    #     age: 27
-    #   }
-
-    #   response =
-    #     conn
-    #     |> post(Routes.users_path(conn, :create, params))
-    #     |> json_response(:bad_request)
-
-    #   expected_response = %{"message" => %{"email" => ["has invalid format"]}}
-
-    #   assert response == expected_response
-    # end
-
-    # test "when the user age is smaller than 18, returns an error", %{conn: conn} do
-    #   params = %{
-    #     name: "Test User",
-    #     password: "123456",
-    #     nickname: "testuser",
-    #     email: "testuser@example.com",
-    #     age: 17
-    #   }
-
-    #   response =
-    #     conn
-    #     |> post(Routes.users_path(conn, :create, params))
-    #     |> json_response(:bad_request)
-
-    #   expected_response = %{"message" => %{"age" => ["must be greater than or equal to 18"]}}
-
-    #   assert response == expected_response
-    # end
   end
 end

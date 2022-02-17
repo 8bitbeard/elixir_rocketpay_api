@@ -1,15 +1,14 @@
 defmodule Rocketpay.AccountTest do
   use Rocketpay.DataCase, async: true
 
+  import Rocketpay.Factory
+
   alias Ecto.Changeset
   alias Rocketpay.Account
 
   describe "changeset/2" do
     test "when all params are valid, returns a valid changeset" do
-      params = %{
-        balance: Decimal.new("5.00"),
-        user_id: "a180d7c2-cf2d-45e9-a089-48bd26ae808d"
-      }
+      params = build(:account_params)
 
       response = Account.changeset(params)
 
@@ -17,10 +16,7 @@ defmodule Rocketpay.AccountTest do
     end
 
     test "when the balance is invalid, returns an invalid changeset" do
-      params = %{
-        balance: "invalid",
-        user_id: "a180d7c2-cf2d-45e9-a089-48bd26ae808d"
-      }
+      params = build(:account_params, %{balance: "invalid"})
 
       response = Account.changeset(params)
 

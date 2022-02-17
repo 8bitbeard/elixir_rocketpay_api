@@ -1,19 +1,15 @@
 defmodule Rocketpay.Accounts.OperationTest do
   use Rocketpay.DataCase, async: true
 
+  import Rocketpay.Factory
+
   alias Rocketpay.{Account, Repo, User}
   alias Rocketpay.Users.Create
   alias Rocketpay.Accounts.{Deposit, Operation}
 
   describe "call/2" do
     test "when the operation is deposit, performs a deposit successully" do
-      params = %{
-        name: "Test User",
-        password: "123456",
-        nickname: "testuser",
-        email: "testuser@example.com",
-        age: 27
-      }
+      params = build(:user_from_params)
 
       {:ok, %User{id: user_id, account: %Account{id: account_id}}} = Create.call(params)
 
@@ -41,13 +37,7 @@ defmodule Rocketpay.Accounts.OperationTest do
     end
 
     test "when the operation is withdraw, performs a withdraw successully" do
-      params = %{
-        name: "From User",
-        password: "123456",
-        nickname: "fromuser",
-        email: "fromuser@example.com",
-        age: 27
-      }
+      params = build(:user_from_params)
 
       {:ok, %User{id: user_id, account: %Account{id: account_id}}} = Create.call(params)
 
@@ -82,13 +72,7 @@ defmodule Rocketpay.Accounts.OperationTest do
     end
 
     test "returns an error when the operation is invalid" do
-      params = %{
-        name: "From User",
-        password: "123456",
-        nickname: "fromuser",
-        email: "fromuser@example.com",
-        age: 27
-      }
+      params = build(:user_from_params)
 
       {:ok, %User{account: %Account{id: account_id}}} = Create.call(params)
 
@@ -124,13 +108,7 @@ defmodule Rocketpay.Accounts.OperationTest do
     end
 
     test "returns an error when the value is invalid" do
-      params = %{
-        name: "Test User",
-        password: "123456",
-        nickname: "testuser",
-        email: "testuser@example.com",
-        age: 27
-      }
+      params = build(:user_from_params)
 
       {:ok, %User{account: %Account{id: account_id}}} = Create.call(params)
 

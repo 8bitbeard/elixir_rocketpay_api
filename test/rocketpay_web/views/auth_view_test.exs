@@ -1,6 +1,7 @@
 defmodule RocketpayWeb.AuthViewTest do
   use RocketpayWeb.ConnCase, async: true
 
+  import Rocketpay.Factory
   import Phoenix.View
 
   alias Rocketpay.User
@@ -8,17 +9,11 @@ defmodule RocketpayWeb.AuthViewTest do
   alias RocketpayWeb.AuthView
 
   setup do
-    params = %{
-      name: "Test User",
-      password: "123456",
-      nickname: "testuser",
-      email: "testuser@example.com",
-      age: 27
-    }
+    params = build(:user_from_params)
 
     {:ok, %User{}} = Rocketpay.create_user(params)
 
-    {:ok, email: params.email, password: params.password}
+    {:ok, email: params["email"], password: params["password"]}
   end
 
   test "renders login.json", %{email: email, password: password} do

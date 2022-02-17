@@ -1,6 +1,8 @@
 defmodule Rocketpay.Accounts.TransactionTest do
   use Rocketpay.DataCase, async: true
 
+  import Rocketpay.Factory
+
   alias Rocketpay.{Account, Repo, User}
   alias Rocketpay.Users.Create
   alias Rocketpay.Accounts.{Deposit, Transaction}
@@ -8,21 +10,8 @@ defmodule Rocketpay.Accounts.TransactionTest do
 
   describe "call/1" do
     setup do
-      from_params = %{
-        name: "From User",
-        password: "123456",
-        nickname: "fromuser",
-        email: "fromuser@example.com",
-        age: 27
-      }
-
-      to_params = %{
-        name: "To User",
-        password: "123456",
-        nickname: "touser",
-        email: "touser@example.com",
-        age: 27
-      }
+      from_params = build(:user_from_params)
+      to_params = build(:user_to_params)
 
       {:ok, %User{id: from_user_id, account: %Account{id: from_account_id}}} =
         Create.call(from_params)

@@ -1,27 +1,16 @@
 defmodule Rocketpay.Accounts.Transactions.ResponseTest do
   use Rocketpay.DataCase, async: true
 
+  import Rocketpay.Factory
+
   alias Rocketpay.{Account, User}
   alias Rocketpay.Accounts.Transactions.Response, as: TransactionResponse
   alias Rocketpay.Users.Create
 
   describe "build/2" do
     test "when all params are valid, returns an user" do
-      from_params = %{
-        name: "From User",
-        password: "123456",
-        nickname: "fromuser",
-        email: "fromuser@example.com",
-        age: 27
-      }
-
-      to_params = %{
-        name: "To User",
-        password: "123456",
-        nickname: "touser",
-        email: "touser@example.com",
-        age: 27
-      }
+      from_params = build(:user_from_params)
+      to_params = build(:user_to_params)
 
       {:ok, %User{account: %Account{} = from_account}} = Create.call(from_params)
       {:ok, %User{account: %Account{} = to_account}} = Create.call(to_params)
