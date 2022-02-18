@@ -105,7 +105,9 @@ defmodule RocketpayWeb.AccountsControllerTest do
       from_params = build(:user_from_params)
       to_params = build(:user_to_params)
 
-      {:ok, %User{account: %Account{id: from_account}} = user} = Rocketpay.create_user(from_params)
+      {:ok, %User{account: %Account{id: from_account}} = user} =
+        Rocketpay.create_user(from_params)
+
       {:ok, %User{account: %Account{id: to_account}}} = Rocketpay.create_user(to_params)
 
       deposit_params = %{"value" => "50.00"}

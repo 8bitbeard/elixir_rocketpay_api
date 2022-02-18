@@ -13,7 +13,11 @@ defmodule Rocketpay.GuardianTest do
     {:ok, %User{id: user_id, account: %Account{}} = user} = Rocketpay.create_user(params)
 
     {:ok,
-     conn: conn, user: user, user_id: user_id, email: params["email"], password: params["password"]}
+     conn: conn,
+     user: user,
+     user_id: user_id,
+     email: params["email"],
+     password: params["password"]}
   end
 
   describe "subject_for_token/2" do
