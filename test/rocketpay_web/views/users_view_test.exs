@@ -8,7 +8,7 @@ defmodule RocketpayWeb.UsersViewTest do
   alias RocketpayWeb.UsersView
 
   test "renders create.json" do
-    params = build(:user_from_params)
+    params = build(:user_params)
 
     token = "token123"
 
@@ -26,8 +26,8 @@ defmodule RocketpayWeb.UsersViewTest do
           id: account_id
         },
         id: user_id,
-        name: "Machina From User",
-        nickname: "machinafromuser"
+        name: params["name"],
+        nickname: params["nickname"]
       }
     }
 

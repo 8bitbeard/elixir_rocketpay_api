@@ -7,7 +7,7 @@ defmodule RocketpayWeb.AuthControllerTest do
 
   describe "login/2" do
     setup %{conn: conn} do
-      params = build(:user_from_params)
+      params = build(:user_params)
 
       {:ok, %User{account: %Account{}}} = Rocketpay.create_user(params)
 

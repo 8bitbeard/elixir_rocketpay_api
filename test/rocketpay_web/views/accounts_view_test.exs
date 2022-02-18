@@ -9,7 +9,7 @@ defmodule RocketpayWeb.AccountsViewTest do
   alias RocketpayWeb.AccountsView
 
   test "renders update.json" do
-    params = build(:user_from_params)
+    params = build(:user_params)
 
     {:ok, %User{account: %Account{id: account_id}}} = Rocketpay.create_user(params)
 
@@ -31,8 +31,8 @@ defmodule RocketpayWeb.AccountsViewTest do
   end
 
   test "renders transaction.json" do
-    from_params = build(:user_from_params)
-    to_params = build(:user_to_params)
+    from_params = build(:user_params)
+    to_params = build(:user_params)
 
     {:ok, %User{account: %Account{id: from_account}}} = Rocketpay.create_user(from_params)
     {:ok, %User{account: %Account{id: to_account}}} = Rocketpay.create_user(to_params)

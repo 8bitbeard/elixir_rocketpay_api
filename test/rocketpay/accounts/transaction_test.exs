@@ -10,8 +10,8 @@ defmodule Rocketpay.Accounts.TransactionTest do
 
   describe "call/1" do
     setup do
-      from_params = build(:user_from_params)
-      to_params = build(:user_to_params)
+      from_params = build(:user_params)
+      to_params = build(:user_params)
 
       {:ok, %User{id: from_user_id, account: %Account{id: from_account_id}}} =
         Create.call(from_params)

@@ -9,7 +9,7 @@ defmodule Rocketpay.Accounts.DepositTest do
 
   describe "call/1" do
     test "when all params are valid, returns an user" do
-      params = build(:user_from_params)
+      params = build(:user_params)
 
       {:ok, %User{id: user_id, account: %Account{id: account_id}}} = Create.call(params)
 
@@ -26,7 +26,7 @@ defmodule Rocketpay.Accounts.DepositTest do
     end
 
     test "when there are invalid params, returns an error" do
-      params = build(:user_from_params)
+      params = build(:user_params)
 
       {:ok, %User{account: %Account{id: account_id}}} = Create.call(params)
 

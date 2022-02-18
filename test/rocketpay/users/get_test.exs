@@ -8,17 +8,18 @@ defmodule Rocketpay.Users.GetTest do
 
   describe "by_id/1" do
     test "when all params are valid, returns an user" do
-      params = build(:user_from_params)
+      params = build(:user_params)
+      name = params["name"]
 
       {:ok, %User{id: user_id}} = Create.call(params)
 
       response = Get.by_id(user_id)
 
-      assert {:ok, %User{name: "Machina From User", age: 30, id: ^user_id}} = response
+      assert {:ok, %User{name: ^name, age: 30, id: ^user_id}} = response
     end
 
     test "when there are invalid params, returns an error" do
-      user_id = "938a4732-ae56-4bcc-9b1b-25263c12f5df"
+      user_id = Faker.UUID.v4()
 
       response = Get.by_id(user_id)
 
@@ -30,13 +31,14 @@ defmodule Rocketpay.Users.GetTest do
 
   describe "by_email/1" do
     test "when all params are valid, returns an user" do
-      params = build(:user_from_params)
+      params = build(:user_params)
+      name = params["name"]
 
       {:ok, %User{id: user_id, email: email}} = Create.call(params)
 
       response = Get.by_email(email)
 
-      assert {:ok, %User{name: "Machina From User", age: 30, id: ^user_id}} = response
+      assert {:ok, %User{name: ^name, age: 30, id: ^user_id}} = response
     end
 
     test "when there are invalid params, returns an error" do

@@ -5,7 +5,9 @@ defmodule RocketpayWeb.UsersControllerTest do
 
   describe "create/2" do
     test "when all params are valid, create a user", %{conn: conn} do
-      params = build(:user_from_params)
+      params = build(:user_params)
+      name = params["name"]
+      nickname = params["nickname"]
 
       response =
         conn
@@ -20,14 +22,14 @@ defmodule RocketpayWeb.UsersControllerTest do
                    "id" => _account_id
                  },
                  "id" => _user_id,
-                 "name" => "Machina From User",
-                 "nickname" => "machinafromuser"
+                 "name" => ^name,
+                 "nickname" => ^nickname
                }
              } = response
     end
 
     test "when the user password is smaller than 6 chars, returns an error", %{conn: conn} do
-      params = build(:user_from_params, %{"password" => "12345"})
+      params = build(:user_params, %{"password" => "12345"})
 
       response =
         conn
@@ -40,7 +42,7 @@ defmodule RocketpayWeb.UsersControllerTest do
     end
 
     test "when the user email is invalid, returns an error", %{conn: conn} do
-      params = build(:user_from_params, %{"email" => "invalid.com"})
+      params = build(:user_params, %{"email" => "invalid.com"})
 
       response =
         conn
@@ -53,7 +55,7 @@ defmodule RocketpayWeb.UsersControllerTest do
     end
 
     test "when the user age is smaller than 18, returns an error", %{conn: conn} do
-      params = build(:user_from_params, %{"age" => 17})
+      params = build(:user_params, %{"age" => 17})
 
       response =
         conn

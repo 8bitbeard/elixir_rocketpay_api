@@ -8,17 +8,18 @@ defmodule Rocketpay.UserTest do
 
   describe "changeset/2" do
     test "when all params are valid, returns a valid changeset" do
-      params = build(:user_from_params)
+      params = build(:user_params)
+      name = params["name"]
 
       response = User.changeset(params)
 
-      assert %Changeset{changes: %{name: "Machina From User"} = changes, valid?: true} = response
+      assert %Changeset{changes: %{name: ^name} = changes, valid?: true} = response
       assert Map.has_key?(changes, :password_hash)
     end
 
     test "when there are some error, returns an invalid changeset" do
       params =
-        build(:user_from_params, %{"age" => 17, "password" => "12345", "email" => "invalid.com"})
+        build(:user_params, %{"age" => 17, "password" => "12345", "email" => "invalid.com"})
 
       response = User.changeset(params)
 

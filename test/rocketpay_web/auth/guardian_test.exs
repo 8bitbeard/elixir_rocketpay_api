@@ -8,7 +8,7 @@ defmodule Rocketpay.GuardianTest do
   alias Rocketpay.{Account, User}
 
   setup %{conn: conn} do
-    params = build(:user_from_params)
+    params = build(:user_params)
 
     {:ok, %User{id: user_id, account: %Account{}} = user} = Rocketpay.create_user(params)
 
@@ -16,29 +16,28 @@ defmodule Rocketpay.GuardianTest do
      conn: conn,
      user: user,
      user_id: user_id,
+     name: params["name"],
      email: params["email"],
      password: params["password"]}
   end
 
   describe "subject_for_token/2" do
-    test "returns the user id when a valid user is passed" do
-      user = build(:user)
-
+    test "returns the user id when a valid user is passed", %{user: user} do
       response = Guardian.subject_for_token(user, "anything_goes")
 
-      expected_response = {:ok, "3ad24a2c-ed8c-483f-86dc-0b607d4551ee"}
+      expected_response = {:ok, user.id}
 
       assert expected_response == response
     end
   end
 
   describe "resource_from_claims/1" do
-    test "resource_from_claims", %{user: user, user_id: user_id} do
+    test "resource_from_claims", %{user: user, name: name, user_id: user_id} do
       {:ok, _token, claims} = Guardian.encode_and_sign(user)
 
       response = Guardian.resource_from_claims(claims)
 
-      assert {:ok, %User{id: ^user_id, name: "Machina From User"}} = response
+      assert {:ok, %User{id: ^user_id, name: ^name}} = response
     end
   end
 

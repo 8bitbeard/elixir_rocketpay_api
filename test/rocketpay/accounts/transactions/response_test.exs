@@ -9,8 +9,8 @@ defmodule Rocketpay.Accounts.Transactions.ResponseTest do
 
   describe "build/2" do
     test "when all params are valid, returns an user" do
-      from_params = build(:user_from_params)
-      to_params = build(:user_to_params)
+      from_params = build(:user_params)
+      to_params = build(:user_params)
 
       {:ok, %User{account: %Account{} = from_account}} = Create.call(from_params)
       {:ok, %User{account: %Account{} = to_account}} = Create.call(to_params)

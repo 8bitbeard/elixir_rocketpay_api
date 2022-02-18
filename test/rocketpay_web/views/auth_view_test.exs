@@ -9,7 +9,7 @@ defmodule RocketpayWeb.AuthViewTest do
   alias RocketpayWeb.AuthView
 
   setup do
-    params = build(:user_from_params)
+    params = build(:user_params)
 
     {:ok, %User{}} = Rocketpay.create_user(params)
 

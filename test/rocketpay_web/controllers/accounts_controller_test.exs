@@ -8,18 +8,18 @@ defmodule RocketpayWeb.AccountsControllerTest do
 
   describe "deposit/2" do
     setup %{conn: conn} do
-      params = build(:user_from_params)
+      params = build(:user_params)
 
       {:ok, %User{account: %Account{id: account_id}} = user} = Rocketpay.create_user(params)
 
       {:ok, token, _claims} = Guardian.encode_and_sign(user)
 
-      conn = put_req_header(conn, "authorization", "Bearer #{token}")
-
-      {:ok, conn: conn, account_id: account_id}
+      {:ok, conn: conn, token: token, account_id: account_id}
     end
 
-    test "when all params are valid, make the deposit", %{conn: conn, account_id: account_id} do
+    test "when all params are valid, make the deposit", %{conn: conn, token: token, account_id: account_id} do
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
+
       params = %{"value" => "50.00"}
 
       response =
@@ -36,7 +36,9 @@ defmodule RocketpayWeb.AccountsControllerTest do
              } = response
     end
 
-    test "when there are invalid params, returns an error", %{conn: conn, account_id: account_id} do
+    test "when there are invalid params, returns an error", %{conn: conn, token: token, account_id: account_id} do
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
+
       params = %{"value" => "banana"}
 
       response =
@@ -48,11 +50,26 @@ defmodule RocketpayWeb.AccountsControllerTest do
 
       assert response == expected_response
     end
+
+    test "When no token is informed, returns an error", %{conn: conn, account_id: account_id} do
+      conn = put_req_header(conn, "content-type", "application/json")
+
+      params = %{"value" => "50.00"}
+
+      response =
+        conn
+        |> post(Routes.accounts_path(conn, :deposit, account_id, params))
+        |> json_response(:unauthorized)
+
+      expected_response = %{"message" => "unauthenticated"}
+
+      assert expected_response == response
+    end
   end
 
   describe "withdraw/2" do
     setup %{conn: conn} do
-      params = build(:user_from_params)
+      params = build(:user_params)
 
       {:ok, %User{account: %Account{id: account_id}} = user} = Rocketpay.create_user(params)
 
@@ -102,8 +119,8 @@ defmodule RocketpayWeb.AccountsControllerTest do
 
   describe "transaction/2" do
     setup %{conn: conn} do
-      from_params = build(:user_from_params)
-      to_params = build(:user_to_params)
+      from_params = build(:user_params)
+      to_params = build(:user_params)
 
       {:ok, %User{account: %Account{id: from_account}} = user} =
         Rocketpay.create_user(from_params)
