@@ -33,7 +33,7 @@
           },
           "201": {
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/CreateUserResponse"
             },
             "description": "Created"
           }
@@ -77,7 +77,7 @@
           },
           "200": {
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/GetUserResponse"
             },
             "description": "Ok"
           }
@@ -397,41 +397,6 @@
       },
       "description": "User"
     },
-    "User": {
-      "type": "object",
-      "title": "User",
-      "properties": {
-        "user": {
-          "type": "object",
-          "properties": {
-            "account": {
-              "$ref": "#/definitions/Account"
-            }
-          }
-        },
-        "nickname": {
-          "type": "string",
-          "example": "joe",
-          "description": "Users nickname"
-        },
-        "name": {
-          "type": "string",
-          "example": "Joe",
-          "description": "Users name"
-        },
-        "message": {
-          "type": "string",
-          "example": "User created",
-          "description": "Message"
-        },
-        "id": {
-          "type": "string",
-          "example": "75837acb-3f3d-407e-ac27-f245a41fecfc",
-          "description": "User id"
-        }
-      },
-      "description": "User data"
-    },
     "TransactionResponse": {
       "type": "object",
       "title": "TransactionResponse",
@@ -515,6 +480,76 @@
         }
       },
       "description": "Error response for operation"
+    },
+    "GetUserResponse": {
+      "type": "object",
+      "title": "User",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "account": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        },
+        "nickname": {
+          "type": "string",
+          "example": "joe",
+          "description": "User nickname"
+        },
+        "name": {
+          "type": "string",
+          "example": "Joe",
+          "description": "User name"
+        },
+        "id": {
+          "type": "string",
+          "example": "75837acb-3f3d-407e-ac27-f245a41fecfc",
+          "description": "User id"
+        },
+        "email": {
+          "type": "string",
+          "example": "joe@example.com",
+          "description": "User email"
+        }
+      },
+      "description": "User data"
+    },
+    "CreateUserResponse": {
+      "type": "object",
+      "title": "User",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "account": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        },
+        "nickname": {
+          "type": "string",
+          "example": "joe",
+          "description": "Users nickname"
+        },
+        "name": {
+          "type": "string",
+          "example": "Joe",
+          "description": "Users name"
+        },
+        "message": {
+          "type": "string",
+          "example": "User created",
+          "description": "Message"
+        },
+        "id": {
+          "type": "string",
+          "example": "75837acb-3f3d-407e-ac27-f245a41fecfc",
+          "description": "User id"
+        }
+      },
+      "description": "User data"
     },
     "AuthenticateResponse": {
       "type": "object",

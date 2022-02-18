@@ -24,7 +24,7 @@ defmodule RocketpayWeb.Swagger.Schemas.User do
             age: 45
           })
         end,
-      User:
+      CreateUserResponse:
         swagger_schema do
           title("User")
           description("User data")
@@ -43,6 +43,26 @@ defmodule RocketpayWeb.Swagger.Schemas.User do
             id(:string, "User id", example: "75837acb-3f3d-407e-ac27-f245a41fecfc")
             name(:string, "Users name", example: "Joe")
             nickname(:string, "Users nickname", example: "joe")
+          end
+        end,
+      GetUserResponse:
+        swagger_schema do
+          title("User")
+          description("User data")
+
+          properties do
+            user(
+              Schema.new do
+                properties do
+                  account(Schema.ref(:Account))
+                end
+              end
+            )
+
+            id(:string, "User id", example: "75837acb-3f3d-407e-ac27-f245a41fecfc")
+            name(:string, "User name", example: "Joe")
+            nickname(:string, "User nickname", example: "joe")
+            email(:string, "User email", example: "joe@example.com")
           end
         end,
       UserErrorResponse:

@@ -42,7 +42,7 @@ defmodule RocketpayWeb.Swagger.Auth do
 
         parameter("Authorization", :header, :string, "Token de autenticação", required: true)
 
-        response(200, "Ok", Schema.ref(:User))
+        response(200, "Ok", Schema.ref(:GetUserResponse))
 
         response(400, "Bad request", Schema.ref(:AuthenticateErrorResponse))
 

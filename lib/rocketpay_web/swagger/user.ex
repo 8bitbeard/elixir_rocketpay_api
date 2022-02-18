@@ -23,7 +23,7 @@ defmodule RocketpayWeb.Swagger.User do
           )
         end
 
-        response(201, "Created", Schema.ref(:User))
+        response(201, "Created", Schema.ref(:CreateUserResponse))
 
         response(400, "Bad request", Schema.ref(:UserErrorResponse))
 
