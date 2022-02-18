@@ -59,6 +59,45 @@
         ]
       }
     },
+    "/api/auth/me": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Retorno dos dados do usuário logado",
+        "responses": {
+          "500": {
+            "description": "Internal server error"
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/AuthenticateErrorResponse"
+            },
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/User"
+            },
+            "description": "Ok"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "required": true,
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token de autenticação"
+          }
+        ],
+        "operationId": "RocketpayWeb.AuthController.me",
+        "description": "Essa é uma descrição do endpoint"
+      }
+    },
     "/api/auth/login": {
       "post": {
         "tags": [

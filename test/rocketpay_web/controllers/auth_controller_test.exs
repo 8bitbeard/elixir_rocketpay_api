@@ -114,6 +114,7 @@ defmodule RocketpayWeb.AuthControllerTest do
 
       assert %{
                "user" => %{
+                 "account" => _account,
                  "email" => ^email
                }
              } = response
