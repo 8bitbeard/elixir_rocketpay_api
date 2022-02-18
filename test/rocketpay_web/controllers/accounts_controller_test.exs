@@ -17,7 +17,11 @@ defmodule RocketpayWeb.AccountsControllerTest do
       {:ok, conn: conn, token: token, account_id: account_id}
     end
 
-    test "when all params are valid, make the deposit", %{conn: conn, token: token, account_id: account_id} do
+    test "when all params are valid, make the deposit", %{
+      conn: conn,
+      token: token,
+      account_id: account_id
+    } do
       conn = put_req_header(conn, "authorization", "Bearer #{token}")
 
       params = %{"value" => "50.00"}
@@ -36,7 +40,11 @@ defmodule RocketpayWeb.AccountsControllerTest do
              } = response
     end
 
-    test "when there are invalid params, returns an error", %{conn: conn, token: token, account_id: account_id} do
+    test "when there are invalid params, returns an error", %{
+      conn: conn,
+      token: token,
+      account_id: account_id
+    } do
       conn = put_req_header(conn, "authorization", "Bearer #{token}")
 
       params = %{"value" => "banana"}
