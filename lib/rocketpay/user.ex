@@ -10,6 +10,8 @@ defmodule Rocketpay.User do
 
   @required_params [:name, :age, :email, :password, :nickname]
 
+  @derive {Jason.Encoder, only: [:id, :name, :nickname, :email, :age]}
+
   schema "users" do
     field :name, :string
     field :age, :integer

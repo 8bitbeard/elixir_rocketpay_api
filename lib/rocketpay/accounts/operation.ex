@@ -16,7 +16,7 @@ defmodule Rocketpay.Accounts.Operation do
 
   defp get_account(repo, id) do
     case repo.get(Account, id) do
-      nil -> {:error, "Account not found!"}
+      nil -> {:error, Error.build(:bad_request, "Account not found!")}
       account -> {:ok, account}
     end
   end
@@ -41,9 +41,6 @@ defmodule Rocketpay.Accounts.Operation do
 
   defp handle_cast(:error, _value, _operation),
     do: {:error, Error.build(:bad_request, "Invalid transaction value!")}
-
-  # defp handle_cast({:ok, _value}, _balance, _operation), do: {:error, "Invalid operation!"}
-  # defp handle_cast(:error, _value, _operation), do: {:error, "Invalid transaction value!"}
 
   defp update_account({:error, _reason} = error, _repo, _account), do: error
 

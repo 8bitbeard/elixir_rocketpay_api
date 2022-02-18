@@ -5,15 +5,15 @@ defmodule RocketpayWeb.AuthControllerTest do
 
   alias Rocketpay.{Account, User}
 
+  setup %{conn: conn} do
+    params = build(:user_params)
+
+    {:ok, %User{account: %Account{}}} = Rocketpay.create_user(params)
+
+    {:ok, conn: conn, email: params["email"], password: params["password"]}
+  end
+
   describe "login/2" do
-    setup %{conn: conn} do
-      params = build(:user_params)
-
-      {:ok, %User{account: %Account{}}} = Rocketpay.create_user(params)
-
-      {:ok, conn: conn, email: params["email"], password: params["password"]}
-    end
-
     test "when all params are valid, authenticate the user", %{
       conn: conn,
       email: email,
@@ -84,6 +84,61 @@ defmodule RocketpayWeb.AuthControllerTest do
         |> json_response(:bad_request)
 
       expected_response = %{"message" => "Invalid or missing params"}
+
+      assert expected_response == response
+    end
+  end
+
+  describe "me/2" do
+    test "when the token is valid, returns the logged user data", %{
+      conn: conn,
+      email: email,
+      password: password
+    } do
+      params = %{
+        email: email,
+        password: password
+      }
+
+      %{"token" => token} =
+        conn
+        |> post(Routes.auth_path(conn, :login, params))
+        |> json_response(:created)
+
+      conn = put_req_header(conn, "authorization", "Bearer " <> token)
+
+      response =
+        conn
+        |> get(Routes.auth_path(conn, :me))
+        |> json_response(:ok)
+
+      assert %{
+               "user" => %{
+                 "email" => ^email
+               }
+             } = response
+    end
+
+    test "when the token is invalid, returns an error", %{conn: conn} do
+      conn = put_req_header(conn, "authorization", "Bearer invalid")
+
+      response =
+        conn
+        |> get(Routes.auth_path(conn, :me))
+        |> json_response(:unauthorized)
+
+      expected_response = %{"message" => "invalid_token"}
+
+      assert expected_response == response
+    end
+
+    test "when no token is informed, returns an unauthenticated error", %{conn: conn} do
+      response =
+        conn
+        |> get(Routes.auth_path(conn, :me))
+        |> json_response(:unauthorized)
+
+      expected_response = %{"message" => "unauthenticated"}
 
       assert expected_response == response
     end

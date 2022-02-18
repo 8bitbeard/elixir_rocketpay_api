@@ -102,7 +102,9 @@ defmodule Rocketpay.Accounts.OperationTest do
         |> Operation.call(:deposit)
         |> Repo.transaction()
 
-      expected_response = {:error, :account_deposit, "Account not found!", %{}}
+      expected_response =
+        {:error, :account_deposit,
+         %Rocketpay.Error{result: "Account not found!", status: :bad_request}, %{}}
 
       assert expected_response == response
     end
